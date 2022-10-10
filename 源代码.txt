@@ -1,0 +1,60 @@
+第一题
+import numpy as np
+from sklearn import tree
+X = np.array([[0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1],
+              [1, 0, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]])
+y = [0, 1, 1, 1, 2, 3, 3, 4]
+clf = tree.DecisionTreeClassifier()  # 创建决策树分类器
+clf.fit(X, y)  # 拟合
+clf.predict([[1, 0, 0]])  # 分类
+import graphviz
+dot_data = tree.export_graphviz(clf, out_file=None)
+graph = graphviz.Source(dot_data) 
+graph.render('result')
+import os
+os.environ["PATH"] += os.pathsep + r'T:\Download\Graphviz\bin/'
+
+第二题
+import os
+import pandas as pd
+import sklearn.tree as tree
+import graphviz
+import os
+
+data = pd.read_csv(r'./data/test1.csv',encoding='utf-8', skipinitialspace=True) #, skipinitialspace=True不能少
+data.head()
+target = data['buys_computer']
+data = data.loc[:, 'age':'credit_rating']
+data.head()
+
+
+clf = tree.DecisionTreeClassifier(criterion='entropy', max_depth=5, min_samples_split=2, min_samples_leaf=1, random_state=12345)  # 当前支持计算信息增益和GINI
+clf.fit(data, target)
+
+dot_data = tree.export_graphviz(clf, out_file=None)  # 导出决策树
+graph = graphviz.Source(dot_data)  # 创建图形
+graph.render('result2')  # 输出PDF文件
+
+os.environ["PATH"] += os.pathsep + r'T:\Download\Graphviz\bin/'
+第三题
+import os
+import pandas as pd
+import sklearn.tree as tree
+import graphviz
+import os
+
+data = pd.read_csv(r'./data/test2.csv',encoding='utf-8', skipinitialspace=True) #, skipinitialspace=True不能少
+data.head()
+target = data['bad_good']
+data = data.loc[:, 'weather':'wind']
+data.head()
+
+
+clf = tree.DecisionTreeClassifier(criterion='entropy', max_depth=5, min_samples_split=2, min_samples_leaf=1, random_state=12345)  # 当前支持计算信息增益和GINI
+clf.fit(data, target)
+
+dot_data = tree.export_graphviz(clf, out_file=None)  # 导出决策树
+graph = graphviz.Source(dot_data)  # 创建图形
+graph.render('result3')  # 输出PDF文件
+
+os.environ["PATH"] += os.pathsep + r'T:\Download\Graphviz\bin/'
